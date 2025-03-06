@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(3,20): error C2143: syntax error: missing ';' before 'constant'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(3,11): error C2734: 'cellSize': 'const' object must be initialized if not 'extern'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(3,20): error C2059: syntax error: 'constant'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(4,21): error C2143: syntax error: missing ';' before 'constant'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(4,11): error C2734: 'gridWidth': 'const' object must be initialized if not 'extern'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(4,21): error C2059: syntax error: 'constant'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(5,22): error C2143: syntax error: missing ';' before 'constant'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(5,11): error C2734: 'gridHeight': 'const' object must be initialized if not 'extern'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(5,22): error C2059: syntax error: 'constant'
