@@ -145,6 +145,8 @@
   <ItemGroup>
     <ClInclude Include="Audio.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Snake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,7 +4,6 @@
 
 class Audio {
 public:
-    Music bgMusic = { 0 };
     Audio();
     ~Audio();
 
@@ -15,10 +14,13 @@ public:
     void PauseMusic();
     void ResumeMusic();
     void PlayMusic();
+    float GetVolume();
     void IncreaseVolume();
     void DecreaseVolume();
+    bool MuteMusic = false;
 
 private:
+    Music bgMusic = { 0 };
     Sound eatSoundEffect = { 0 };
     Sound dieSoundEffect = { 0 };
     float volume = 0.2f;

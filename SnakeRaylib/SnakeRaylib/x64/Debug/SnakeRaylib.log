@@ -1,4 +1,11 @@
-﻿  Audio.cpp
-C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\Audio.cpp(27,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\Audio.cpp(29,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  main.cpp
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\GameState.h(12,26): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(38,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(39,32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(159,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(159,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(162,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(162,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(185,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\main.cpp(185,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   SnakeRaylib.vcxproj -> C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\x64\Debug\SnakeRaylib.exe

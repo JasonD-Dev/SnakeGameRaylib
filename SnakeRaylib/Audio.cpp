@@ -62,7 +62,7 @@ void Audio::PauseMusic() {
 }
 
 void Audio::ResumeMusic() {
-    if (!IsMusicPlaying()) {
+    if (!IsMusicPlaying() && !MuteMusic) {
         ResumeMusicStream(bgMusic);
     }
 }
@@ -70,16 +70,20 @@ void Audio::ResumeMusic() {
 void Audio::PlayMusic() {
     PlayMusicStream(bgMusic);
 }
+float Audio::GetVolume() {
+    float temp = volume * 100;
+    return temp;
+}
 
 void Audio::IncreaseVolume() {
-    volume = (volume + 0.1f > 1.0f) ? 1.0f : volume + 0.1f;
+    volume = (volume + 0.05f > 1.0f) ? 1.0f : volume + 0.05f;
     SetMusicVolume(bgMusic, volume);
     SetSoundVolume(eatSoundEffect, volume);
     SetSoundVolume(dieSoundEffect, volume);
 }
 
 void Audio::DecreaseVolume() {
-    volume = (volume - 0.1f < 0.0f) ? 0.0f : volume - 0.1f;
+    volume = (volume - 0.05f < 0.0f) ? 0.0f : volume - 0.05f;
     SetMusicVolume(bgMusic, volume);
     SetSoundVolume(eatSoundEffect, volume);
     SetSoundVolume(dieSoundEffect, volume);
