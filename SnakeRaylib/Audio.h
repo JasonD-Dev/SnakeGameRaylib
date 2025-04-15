@@ -1,27 +1,29 @@
 #pragma once
 #include "raylib.h"
-#include <iostream>
 
 class Audio {
 public:
     Audio();
     ~Audio();
 
-    void UpdateMusic();
-    void PlayEatSoundEffect();
-    void PlayDieSoundEffect();
-    bool IsMusicPlaying() const;
-    void PauseMusic();
-    void ResumeMusic();
-    void PlayMusic();
-    float GetVolume();
-    void IncreaseVolume();
-    void DecreaseVolume();
-    bool MuteMusic = false;
+	void Update();
+	void PlayEat();
+	void PlayDie();
+	void PlayMusic();
+	void PauseMusic();
+	void ResumeMusic();
+	void IncreaseVolume();
+	void DecreaseVolume();
+	void ToggleMute();
+	float GetVolume();
+	bool IsPlaying() const;
+	bool IsMuted() const;
 
 private:
-    Music bgMusic = { 0 };
-    Sound eatSoundEffect = { 0 };
-    Sound dieSoundEffect = { 0 };
-    float volume = 0.2f;
+    Music bgMusic;
+    Sound eatSFX;
+    Sound dieSFX;
+    bool muted;
+	float volume;
+
 };

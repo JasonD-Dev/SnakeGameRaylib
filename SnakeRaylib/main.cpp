@@ -5,80 +5,76 @@
 
 // GameState
 GameState Game;
-int max_y = 12;
-int max_x = 13;
+const int max_y = Game.map.gridHeight - 1;
+const int max_x = Game.map.gridWidth - 1;
+
 bool nightmode = false;
 
 void BeginGame() {
     Game.food = { 9, 6 };
     Game.snake.length = 2;
     Game.snake.direction = { 1, 0 };
-    Game.snake.snakeSegments[0] = { 3, 6 }; 
-    Game.snake.snakeSegments[1] = { 2, 6 };
+    Game.snake.segments[0] = { 3, 6 }; 
+    Game.snake.segments[1] = { 2, 6 };
     Game.audioManager.ResumeMusic();
     Game.score = 0;
     Game.readyToPlay = true;
     Game.gameOver = false;
+    Game.win = false;
 }
 
-
-bool IsSnake(Vector2 v) {
-    for (int i = 1; i < Game.snake.length; i++)
-    {
-        if (v.x == Game.snake.snakeSegments[i].x && v.y == Game.snake.snakeSegments[i].y) {
-            return true;
-        }
+void Die() {
+    if (!Game.gameOver) {
+		Game.gameOver = true;
+		Game.audioManager.PlayDie();
     }
-    return false;
 }
 
 void SpawnFood() {
     Vector2 temp;
     do {
-        temp.x = GetRandomValue(0, max_x);
-        temp.y = GetRandomValue(0, max_y);
+        temp.x = (float)GetRandomValue(0, max_x);
+        temp.y = (float)GetRandomValue(0, max_y);
     }
-    while (IsSnake(temp));
+    while (Game.snake.IsSnake(temp));
     Game.food = temp;
 
     if (Game.snake.length >= 127) {
-        // No space left: player has won or game is over
         Game.win = true;
-        Game.gameOver = true;
+        Die();
     }
 }
 
 void EatFood() {
-    Game.food = { 0, 0 };
-    Game.audioManager.PlayEatSoundEffect();
-    SpawnFood();
-    Game.score++;
-    Game.snake.length++;
+    if (!Game.gameOver)
+    {
+		Game.food = { 0, 0 };
+		Game.audioManager.PlayEat();
+		SpawnFood();
+		Game.snake.length++;
+		Game.score++;
+    }
 }
 
-void Die() {
-    Game.gameOver = true;
-    Game.audioManager.PlayDieSoundEffect();
-}
 
 void MoveSnake(Snake& snake) {
-    if (snake.snakeSegments[0].x == Game.food.x && snake.snakeSegments[0].y == Game.food.y)
+    if (snake.segments[0].x == Game.food.x && snake.segments[0].y == Game.food.y)
     {
         EatFood();
     }
-    else if (IsSnake(snake.snakeSegments[0]))
-    {
-        Die();
-    }
+	else if (Game.snake.IsSnake(snake.segments[0]))
+	{
+		Die();
+	}
     for (int i = snake.length - 1; i > 0; i--) {
-        snake.snakeSegments[i] = snake.snakeSegments[i - 1];
+        snake.segments[i] = snake.segments[i - 1];
     }
 
-    snake.snakeSegments[0].x = (snake.snakeSegments[0].x + snake.direction.x > max_x) ? 0 :
-        (snake.snakeSegments[0].x + snake.direction.x < 0) ? max_x : snake.snakeSegments[0].x + snake.direction.x;
+    snake.segments[0].x = (snake.segments[0].x + snake.direction.x > max_x) ? 0 :
+        (snake.segments[0].x + snake.direction.x < 0) ? max_x : snake.segments[0].x + snake.direction.x;
 
-    snake.snakeSegments[0].y = (snake.snakeSegments[0].y + snake.direction.y > max_y) ? 0 :
-        (snake.snakeSegments[0].y + snake.direction.y < 0) ? max_y : snake.snakeSegments[0].y + snake.direction.y;
+    snake.segments[0].y = (snake.segments[0].y + snake.direction.y > max_y) ? 0 :
+        (snake.segments[0].y + snake.direction.y < 0) ? max_y : snake.segments[0].y + snake.direction.y;
 
 
 
@@ -91,9 +87,9 @@ void DrawRect(int posX, int posY, Color color) {
 
 void DrawGrid()
 {
-    for (int i = 0; i < 13; i++) // row
+    for (int i = 0; i < 13; i++)
     {
-        for (int j = 0; j < 14; j++) // colomn
+        for (int j = 0; j < 14; j++) 
         {
             if (Game.map.grid[i][j] == ' ' && (i + j) % 2 == 0)
             {
@@ -133,47 +129,50 @@ void DrawGameOverScreen() {
     int textSize = 30;
 
     // Score 
-    if (Game.score >= Game.highestScore)
+    if (!Game.win && Game.score >= Game.highestScore)
     {
         Game.highestScore = Game.score;
         DrawTextCenteredX("Congrats on a new High Score!", 400, textSize, nightmode ? GOLD : SKYBLUE);
     }
     if (Game.win) 
     {
-        DrawTextCenteredX("YOU CHEATED DIDN'T YOU!", 120, titlesize, nightmode ? PINK : VIOLET);
+        DrawTextCenteredX("YOU CHEATED DIDN'T YOU!", 120, titlesize-20, nightmode ? PINK : VIOLET);
+        DrawTextCenteredX("You pressed the button I told you not to press.", 300, textSize-5, nightmode ? LIGHTGRAY : DARKBLUE);
+		DrawTextCenteredX(">:(", 400, titlesize*4, nightmode ? RED : RED);
     }
     else {
         DrawTextCenteredX("YOU DIED", 120, titlesize, RED);
+		DrawTextCenteredX(TextFormat("Score: %d", Game.score), 300, textSize, nightmode ? LIGHTGRAY : DARKBLUE);
+		DrawTextCenteredX(TextFormat("Highest Score: %d", Game.highestScore), 350, textSize, nightmode ? LIGHTGRAY : DARKBLUE);
+		DrawTextCenteredX("Press R to Play Again", 550, textSize, nightmode ? GREEN : LIME);
+
     }
-    DrawTextCenteredX(TextFormat("Score: %d", Game.score), 300, textSize, nightmode ? LIGHTGRAY : DARKBLUE);
-    DrawTextCenteredX(TextFormat("Highest Score: %d", Game.highestScore), 350, textSize, nightmode ? LIGHTGRAY : DARKBLUE);
-    DrawTextCenteredX("Press R to Play Again", 550, textSize, nightmode ? GREEN : LIME);
 }
 
 void DrawSnake(Snake& snake, Map& map) {
     for (int i = 0; i < snake.length; i++)
     {
-        Vector2 seg = snake.snakeSegments[i];
+        Vector2 seg = snake.segments[i];
         if (i == 0)
         {
-            DrawRectangle(seg.x * map.cellSize, seg.y * map.cellSize, map.cellSize, map.cellSize, (nightmode) ? BLUE : BLUE);
+            DrawRectangle(static_cast<int>(seg.x) * map.cellSize, static_cast<int>(seg.y) * map.cellSize, map.cellSize, map.cellSize, (nightmode) ? BLUE : DARKBLUE);
         }
         else {
-            DrawRectangle(seg.x * map.cellSize, seg.y * map.cellSize, map.cellSize, map.cellSize, (nightmode) ? DARKBLUE : DARKBLUE);
+            DrawRectangle(static_cast<int>(seg.x) * map.cellSize, static_cast<int>(seg.y) * map.cellSize, map.cellSize, map.cellSize, (nightmode) ? DARKBLUE : BLUE);
         }
     }
 }
 
-void DelayMoveSnake(Snake snake) {
+void DelayMoveSnake(Snake& snake) {
     Game.moveTimer += GetFrameTime();
     if (Game.moveTimer >= Game.moveInterval)
     {
-        MoveSnake(Game.snake);
+        MoveSnake(snake);
         Game.moveTimer = 0;
     }
 }
 
-void DrawGame(Map map, Snake snake)
+void DrawGame(Map& map, Snake& snake)
 {
     if (!Game.readyToPlay) {
         DrawMainMenu();
@@ -182,7 +181,7 @@ void DrawGame(Map map, Snake snake)
     {
         DrawGrid();
         // Food
-        DrawRect(Game.food.x, Game.food.y, nightmode ? RED : RED);
+        DrawRect(static_cast<int>(Game.food.x), static_cast<int>(Game.food.y), nightmode ? RED : RED);
         
         // Snake
         DelayMoveSnake(snake);
@@ -201,18 +200,21 @@ void DrawGame(Map map, Snake snake)
 
 void InputManager(Snake& snake) 
 {
-
+    // begin 
     if (IsKeyReleased(KEY_R)) 
     {
         BeginGame();
     }
-
-    // Cheats
+    // nightmode
     if (IsKeyPressed(KEY_F1)) {
         nightmode = !nightmode;
     }
-    if (IsKeyPressed(KEY_F2)) { EatFood(); }
-    if (IsKeyPressed(KEY_F3)) { Die();}
+
+	// Cheats
+	if (IsKeyPressed(KEY_F2) && Game.readyToPlay) { Die(); }
+	if (IsKeyDown(KEY_SPACE) && Game.readyToPlay) { EatFood(); }
+
+
 
     // Snake Movement
     if (IsKeyPressed(KEY_W) && Game.snake.direction.y == 0) { // North
@@ -231,26 +233,14 @@ void InputManager(Snake& snake)
 
     // Audio Control
     if (IsKeyPressed(KEY_M)) { 
-        if (!Game.audioManager.MuteMusic && !Game.gameOver)
+        if (!Game.audioManager.IsMuted() && !Game.gameOver)
         {
             Game.audioManager.PauseMusic();
-            Game.audioManager.MuteMusic = true;
+            Game.audioManager.ToggleMute();
         }
-        else if (Game.audioManager.MuteMusic && !Game.gameOver)
+        else if (Game.audioManager.IsMuted() && !Game.gameOver)
         {
-            Game.audioManager.MuteMusic = false;
-            Game.audioManager.ResumeMusic();
-        }
-    }
-
-    if (IsKeyPressed(KEY_SPACE)) 
-    {
-        if (Game.audioManager.IsMusicPlaying())
-        {
-            Game.audioManager.PauseMusic();
-        }
-        else
-        {
+            Game.audioManager.ToggleMute();
             Game.audioManager.ResumeMusic();
         }
     }
@@ -265,21 +255,50 @@ void InputManager(Snake& snake)
 
 }
 
+Image ConvertFrom24to32(Image aImg) {
+    Image img32 = GenImageColor(aImg.width, aImg.height, BLANK);
+    for (int y = 0; y < aImg.height; y++) {
+		for (int x = 0; x < aImg.width; x++) {
+			Color pixel = GetImageColor(aImg, x, y); 
+			pixel.a = 255; // Set alpha to opaque
+			ImageDrawPixel(&img32, x, y, pixel);
+		}
+	}
+    UnloadImage(aImg);
+    return img32;
+}
+
+bool SetIcon() {
+	Image icon = LoadImage("resources/Icon.jpg");
+	if (icon.data == NULL)
+	{
+        return false;
+	}
+	icon = ConvertFrom24to32(icon);
+	SetWindowIcon(icon);
+	UnloadImage(icon);
+    return true;
+}
+
+
 int main()
 {   
     InitWindow(Game.map.windowWidth, Game.map.windowHeight, "Snake Game Raylib by Jason D'Souza");
-    SetTargetFPS(60);
+    if (!SetIcon())
+    {
+        CloseWindow();
+    }
+    SetTargetFPS(120);
 
     while (!WindowShouldClose())
     {
-        Game.audioManager.UpdateMusic();
+        Game.audioManager.Update();
         InputManager(Game.snake);
         BeginDrawing();
         ClearBackground(nightmode ? DARKBROWN : RAYWHITE);
         DrawGame(Game.map, Game.snake);
         EndDrawing();
     }
-
     CloseWindow();
 
     return 0;

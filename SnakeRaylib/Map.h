@@ -1,6 +1,7 @@
 #pragma once
 
-struct Map {
+class Map {
+public:
     const int cellSize = 55;
     const int gridWidth = 14;
     const int gridHeight = 13;
