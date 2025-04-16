@@ -38,7 +38,8 @@ Includes pixel graphics, sound effects, dynamic difficulty, and a full music pla
 > - Tab - Change Difficulty
 > - Space - Cheat: Instant Eat Food
 > - ESC - Quit Window, Close Game
-  > [!CAUTION]
+
+> [!CAUTION]
 > **Do not press space ( ｡ •̀ ᴖ •́ ｡)💢**
 
 ## Technologies Used
