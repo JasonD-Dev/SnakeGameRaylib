@@ -15,7 +15,7 @@ public:
 	void IncreaseVolume();
 	void DecreaseVolume();
 	void ToggleMute();
-	float GetVolume();
+	float GetVolume() const;
 	bool IsPlaying() const;
 	bool IsMuted() const;
 
