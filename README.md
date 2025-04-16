@@ -1,11 +1,18 @@
 # SnakeGameRaylib
 <img src="https://raw.githubusercontent.com/JasonD-Dev/SnakeGameRaylib/refs/heads/main/Screenshots/gif1.gif" width=500 height=500>
 
-Classic Snake game, built in C++ using the Raylib graphics library. Smooth controls, responsive audio, and clean grid-based visuals—perfect for retro gaming fans and beginner C++ devs.
+Classic Snake game,  built using **C++** and the **Raylib** graphics/audio library.  
+Includes pixel graphics, sound effects, dynamic difficulty, and a full music playlist that plays one song after another! Smooth controls, responsive audio, and clean grid-based visuals—perfect for retro gaming fans and beginner C++ devs.
 
 ## Features
-- 🎮 Classic snake gameplay with keyboard controls (arrow keys)
-- 🎵 Background music and sound effects for eating and dying
+- 🎮 Classic snake with keyboard controls
+- Grid-based Snake game with responsive controls
+- Eat to grow, avoid crashing into yourself
+- 🎵 Multiple background tracks that play one after the other
+- 🔇 Mute and unmute music
+- 🔁 Automatically plays the next song when one ends
+- sound effects for eating and dying
+- Adjustable difficulty (speeds up as you go)
 - 🌗 Optional night mode (toggleable for visual comfort)
 - 🍎 Randomized food spawning
 - 💾 Score tracking and high score saving during session
@@ -17,16 +24,20 @@ Classic Snake game, built in C++ using the Raylib graphics library. Smooth contr
 3. Collect Fruit without colliding with your body
 
 ## Controls
-  - WASD or ArrowKeys- Move Snake
-  - Q - Volume up
-  - E - Volume Down
-  - M - Mute Background Music, but keep sound effects
-  - ESC - Quit Window, Close Game
-  - R - Begin new game / Restart
-  - F - Maximise Window (Doesnt Resize program)
-  - F1 - Daytime mode/Night-time Mode
-  - F2 - Cheat: Instant Death
-  - Space - Cheat: Instant Eat Food
+> [!IMPORTANT]
+> 
+> - WASD or ArrowKeys- Move Snake
+> - Q - Daytime/Night-time Mode
+> - R - Begin new game / Restart
+> - F - Maximise Window (Doesn't Resize program)
+> - F1 - Mute Background Music, but keep sound effects
+> - F2 - Next Music Track
+> - F3 - Volume up
+> - F4 - Volume Down
+> - F5 - Cheat: Instant Death
+> - Tab - Change Difficulty
+> - Space - Cheat: Instant Eat Food
+> - ESC - Quit Window, Close Game
   > [!CAUTION]
 > **Do not press space ( ｡ •̀ ᴖ •́ ｡)💢**
 
