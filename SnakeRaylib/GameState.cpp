@@ -13,6 +13,7 @@ void GameState::BeginGame() { // Transitions from different game states
 	gameOver = false;
 	win = false;
 }
+
 void GameState::Die() {
 	if (!gameOver) {
 		gameOver = true;
@@ -28,7 +29,7 @@ void GameState::SpawnFood() {
 	} while (snake.IsSnake(temp));
 	food = temp;
 
-	if (snake.length >= 127) {
+	if (score >= 127) {
 		win = true;
 		Die();
 	}
@@ -37,10 +38,21 @@ void GameState::SpawnFood() {
 void GameState::EatFood() {
 	if (!gameOver)
 	{
-		food = { 0, 0 };
+		food = {NULL, NULL};
 		audioManager.PlayEat();
 		SpawnFood();
 		snake.length++;
+		score++;
+	}
+}
+
+void GameState::CheatFood() 
+{
+	if (!gameOver)
+	{
+		food = { NULL, NULL };
+		audioManager.PlayEat();
+		SpawnFood();
 		score++;
 	}
 }
@@ -102,22 +114,22 @@ void GameState::InputManager(Snake& snake)
 
 	// Cheats
 	if (IsKeyPressed(KEY_F2) && readyToPlay) { Die(); }
-	if (IsKeyDown(KEY_SPACE) && readyToPlay) { EatFood(); }
+	if (IsKeyDown(KEY_SPACE) && readyToPlay) { CheatFood(); }
 
 
 
 	// Snake Movement
 	commandTimer += GetFrameTime();
-	if (IsKeyPressed(KEY_W) && snake.direction.y == 0) { // North
+	if ((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) && snake.direction.y == 0) { // North
 		MoveCommand(0, -1, snake);
 	}
-	if (IsKeyPressed(KEY_S) && snake.direction.y == 0) { // South
+	if ((IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) && snake.direction.y == 0) { // South
 		MoveCommand(0, 1, snake);
 	}
-	if (IsKeyPressed(KEY_A) && snake.direction.x == 0) { // West
+	if ((IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) && snake.direction.x == 0) { // West
 		MoveCommand(-1, 0, snake);
 	}
-	if (IsKeyPressed(KEY_D) && snake.direction.x == 0) { // East
+	if ((IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) && snake.direction.x == 0) { // East
 		MoveCommand(1, 0, snake);
 	}
 
@@ -137,11 +149,11 @@ void GameState::InputManager(Snake& snake)
 		}
 	}
 
-	if (IsKeyPressed(KEY_UP)) {
+	if (IsKeyPressed(KEY_Q)) {
 		audioManager.IncreaseVolume();
 	}
 
-	if (IsKeyPressed(KEY_DOWN)) {
+	if (IsKeyPressed(KEY_E)) {
 		audioManager.DecreaseVolume();
 	}
 

@@ -23,13 +23,10 @@ void Audio::Update() {
 }
 
 void Audio::PlayEat() {
-	SetSoundVolume(eatSFX, volume + 0.1f >= 1.0f ? 1.0f : volume + 0.1f);
 	PlaySound(eatSFX);
 }
 
 void Audio::PlayDie() {
-	SetSoundVolume(dieSFX, volume);
-	PlaySound(dieSFX);
 	PauseMusic();
 }
 
@@ -48,11 +45,17 @@ void Audio::ResumeMusic() {
 void Audio::IncreaseVolume() {
 	volume + .05f >= 1.0f ? volume = 1.0f : volume += .05f;
 	SetMusicVolume(bgMusic, muted ? 0.0f : volume);
+	SetSoundVolume(eatSFX, volume);
+	SetSoundVolume(dieSFX, volume);
+
 }
 
 void Audio::DecreaseVolume() {
 	volume - .05f <= 0.0f ? volume = 0.0f : volume -= .05f;
 	SetMusicVolume(bgMusic, muted ? 0.0f : volume);
+	SetSoundVolume(eatSFX, volume);
+	SetSoundVolume(dieSFX, volume);
+
 }
 
 void Audio::ToggleMute() {

@@ -39,6 +39,7 @@ private:
 	void Die();
 	void SpawnFood();
 	void EatFood();
+	void CheatFood();
 	void UpdateSnake(Snake& snake);
 	void MoveCommand(float x, float y, Snake& snake);
 };

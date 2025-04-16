@@ -49,19 +49,20 @@ void GameRenderer::DrawTextCenteredX(const char* msg, int y, int fontSize, Color
 }
 
 void GameRenderer::DrawMainMenu() {
-	int titlesize = 60;
-	int textSize = 30;
+	int titlesize = 56;
+	int textSize = 26;
 
 	DrawTextCenteredX("Snake Game RayLib", 120, titlesize, Game.GetNightMode() ? GOLD : SKYBLUE);
-	DrawTextCenteredX("Made By: Jason D'Souza", 200, 20, Game.GetNightMode() ? YELLOW : DARKGRAY);
-	DrawTextCenteredX("WASD - move", 250, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
-	DrawTextCenteredX("M - Mute music ONLY", 300, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
-	DrawTextCenteredX("Up, Down arrow keys - Adjust Volume", 350, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
-	DrawTextCenteredX(TextFormat("Volume: %.0f", Game.audioManager.GetVolume()), 400, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
-	DrawTextCenteredX("Esc - Quit", 450, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX("Made By: Jason D'Souza", 190, 20, Game.GetNightMode() ? YELLOW : DARKGRAY);
+	DrawTextCenteredX("Move : Arrow Keys or WASD", 240, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX("Mute music ONLY : M", 280, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX("Adjust Volume : UP (Q) / DOWN (E) ", 320, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX(TextFormat("Volume : %.0f", Game.audioManager.GetVolume()), 360, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX("Maximise Window : F", 400, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
+	DrawTextCenteredX("Quit : ESC", 440, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);
 	DrawTextCenteredX("Ready to Play? ", 500, textSize, Game.GetNightMode() ? LIGHTGRAY : MAROON);
-	DrawTextCenteredX("Press R to Begin a new Game", 550, textSize, Game.GetNightMode() ? GREEN : LIME);
-	DrawTextCenteredX("DO NOT PRESS SPACE BAR!", 600, textSize - 10, Game.GetNightMode() ? RED : RED);
+	DrawTextCenteredX("Press R to Begin a new Game", 540, textSize, Game.GetNightMode() ? GREEN : LIME);
+	DrawTextCenteredX("DO NOT PRESS SPACE BAR!", 580, textSize - 10, Game.GetNightMode() ? RED : RED);
 }
 
 void GameRenderer::DrawGameOverScreen(GameState& Game) {
