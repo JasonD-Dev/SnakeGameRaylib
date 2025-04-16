@@ -28,6 +28,7 @@ void Audio::PlayEat() {
 
 void Audio::PlayDie() {
 	PauseMusic();
+	PlaySound(dieSFX);
 }
 
 void Audio::PlayMusic() {

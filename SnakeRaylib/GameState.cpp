@@ -16,8 +16,8 @@ void GameState::BeginGame() { // Transitions from different game states
 
 void GameState::Die() {
 	if (!gameOver) {
-		gameOver = true;
 		audioManager.PlayDie();
+		gameOver = true;
 	}
 }
 

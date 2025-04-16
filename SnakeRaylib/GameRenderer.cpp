@@ -49,9 +49,6 @@ void GameRenderer::DrawTextCenteredX(const char* msg, int y, int fontSize, Color
 }
 
 void GameRenderer::DrawMainMenu() {
-	int titlesize = 56;
-	int textSize = 26;
-
 	DrawTextCenteredX("Snake Game RayLib", 120, titlesize, Game.GetNightMode() ? GOLD : SKYBLUE);
 	DrawTextCenteredX("Made By: Jason D'Souza", 190, 20, Game.GetNightMode() ? YELLOW : DARKGRAY);
 	DrawTextCenteredX("Move : Arrow Keys or WASD", 240, textSize, Game.GetNightMode() ? LIGHTGRAY : DARKBLUE);

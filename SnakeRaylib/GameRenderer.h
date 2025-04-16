@@ -9,6 +9,8 @@ public:
 
 private:
 	GameState Game;
+	int titlesize = 56;
+	int textSize = 30;
 
 	void DrawRect(int posX, int posY, Color color);
 	void DrawGrid(Map& map);

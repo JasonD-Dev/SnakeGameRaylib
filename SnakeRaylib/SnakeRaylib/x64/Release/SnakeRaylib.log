@@ -1,10 +1,11 @@
-﻿  GameRenderer.cpp
+﻿  Audio.cpp
+  GameRenderer.cpp
   GameState.cpp
   main.cpp
 LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  10 of 46 functions (21.7%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  11 of 46 functions (23.9%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   SnakeRaylib.vcxproj -> C:\Users\Jason\Documents\GitHub\SnakeGameRaylib\SnakeRaylib\x64\Release\SnakeRaylib.exe
