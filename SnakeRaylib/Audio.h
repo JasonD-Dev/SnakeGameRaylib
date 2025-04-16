@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include <vector>
 
 class Audio {
 public:
@@ -12,18 +13,20 @@ public:
 	void PlayMusic();
 	void PauseMusic();
 	void ResumeMusic();
+	void SetAllSFXVolume();
 	void IncreaseVolume();
 	void DecreaseVolume();
 	void ToggleMute();
+	void PlayNextMusic();
 	float GetVolume() const;
 	bool IsPlaying() const;
-	bool IsMuted() const;
 
 private:
-    Music bgMusic;
+    std::vector<Music> playlist;
+	size_t currentMusicIndex = 0;
     Sound eatSFX;
     Sound dieSFX;
-    bool muted;
+    bool muted = false;
 	float volume;
 
 };

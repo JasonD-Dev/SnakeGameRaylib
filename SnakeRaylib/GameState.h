@@ -19,15 +19,16 @@ public:
 	short int GetHighestScore() const { return highestScore; }
 	void SetHighestScore(short int score) { highestScore = score; }
 	bool GetWin() const { return win; }
+	float GetInterval();
 
 private:
 	bool readyToPlay = false;
 	bool gameOver = false;
 	Vector2 food;
 	float moveTimer = 0.0f;
-	float moveInterval = 0.15f;
+	float moveInterval = 0.2f;
 	float commandTimer = 0.0f;
-	float commandInterval = 0.1f;
+	float commandInterval = 0.2f;
 	short int score = 0;
 	short int highestScore = 0;
 	bool win = false;
@@ -41,5 +42,6 @@ private:
 	void EatFood();
 	void CheatFood();
 	void UpdateSnake(Snake& snake);
+	void IncreaseDifficulty();
 	void MoveCommand(float x, float y, Snake& snake);
 };

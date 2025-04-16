@@ -86,6 +86,17 @@ void GameState::DelayUpdateSnake(Snake& snake) {
 	}
 }
 
+void GameState::IncreaseDifficulty() {
+	if (moveInterval - 0.05f >= 0.05f) {
+		moveInterval -= 0.05f;
+		commandInterval -= 0.05f;
+	}
+	else {
+		moveInterval = 0.2f;
+		commandInterval = 0.2f;
+	}
+}
+
 void GameState::MoveCommand(float x, float y, Snake& snake) {
 	if (commandTimer >= commandInterval)
 	{
@@ -107,13 +118,12 @@ void GameState::InputManager(Snake& snake)
 		ToggleBorderlessWindowed();
 	}
 
-	// nightmode
-	if (IsKeyPressed(KEY_F1)) {
+	if (IsKeyPressed(KEY_Q)) {
 		nightmode = !nightmode;
 	}
 
 	// Cheats
-	if (IsKeyPressed(KEY_F2) && readyToPlay) { Die(); }
+	if (IsKeyPressed(KEY_F5) && readyToPlay) { Die(); }
 	if (IsKeyDown(KEY_SPACE) && readyToPlay) { CheatFood(); }
 
 
@@ -133,29 +143,32 @@ void GameState::InputManager(Snake& snake)
 		MoveCommand(1, 0, snake);
 	}
 
+	if (IsKeyPressed(KEY_TAB)) {
+		IncreaseDifficulty();
+	}
 	
 
 	// Audio Control
-	if (IsKeyPressed(KEY_M)) {
-		if (!audioManager.IsMuted() && !gameOver)
-		{
-			audioManager.PauseMusic();
-			audioManager.ToggleMute();
-		}
-		else if (audioManager.IsMuted() && !gameOver)
-		{
-			audioManager.ToggleMute();
-			audioManager.ResumeMusic();
-		}
+	if (IsKeyPressed(KEY_F1) && !gameOver) {
+		audioManager.ToggleMute();
 	}
 
-	if (IsKeyPressed(KEY_Q)) {
+	if (IsKeyPressed(KEY_F2)) {
+		audioManager.PlayNextMusic();
+	}
+
+	if (IsKeyPressed(KEY_F3)) {
 		audioManager.IncreaseVolume();
 	}
 
-	if (IsKeyPressed(KEY_E)) {
+	if (IsKeyPressed(KEY_F4)) {
 		audioManager.DecreaseVolume();
 	}
 
 
+}
+
+float GameState::GetInterval() {
+	float temp = moveInterval * 10;
+	return temp;
 }

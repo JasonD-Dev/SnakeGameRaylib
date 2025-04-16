@@ -1,29 +1,52 @@
 #include "Audio.h"
+//#include <iostream>
 
 Audio::Audio() {
 	InitAudioDevice();
-	bgMusic = LoadMusicStream("resources/Music.mp3");
+
+	playlist.push_back(LoadMusicStream("resources/Music1.mp3"));
+	playlist.push_back(LoadMusicStream("resources/Music2.mp3"));
+	playlist.push_back(LoadMusicStream("resources/Music3.mp3"));
+	playlist.push_back(LoadMusicStream("resources/Music4.mp3"));
+	playlist.push_back(LoadMusicStream("resources/Music5.mp3"));
+	
+	for (Music& music : playlist) {
+		music.looping = false;
+	}
+
 	eatSFX = LoadSound("resources/Eat.wav");
 	dieSFX = LoadSound("resources/Death.wav");
-	volume = 0.2f;
 	muted = false;
-	PlayMusicStream(bgMusic);
-	SetMusicVolume(bgMusic, volume);
+
+	volume = 0.2f; 
+	SetMasterVolume(1.0f);
+	SetAllSFXVolume();
+	PlayMusic();
 }
 
+
+
 Audio::~Audio() {
-	UnloadMusicStream(bgMusic);
+	for (Music& music : playlist) {
+		UnloadMusicStream(music);
+	}
+
 	UnloadSound(eatSFX);
 	UnloadSound(dieSFX);
 	CloseAudioDevice();
 }
 
-void Audio::Update() {
-	UpdateMusicStream(bgMusic);
+void Audio::Update() { 
+	UpdateMusicStream(playlist[currentMusicIndex]);
+
+	if (!IsMusicStreamPlaying(playlist[currentMusicIndex]) && !muted) {
+		//std::cout << "Playing Next\n";
+		PlayNextMusic();
+	}
 }
 
-void Audio::PlayEat() {
-	PlaySound(eatSFX);
+void Audio::PlayEat() { 
+	PlaySound(eatSFX); 
 }
 
 void Audio::PlayDie() {
@@ -32,36 +55,66 @@ void Audio::PlayDie() {
 }
 
 void Audio::PlayMusic() {
-	PlayMusicStream(bgMusic);
+	if (!playlist.empty()) {
+		Music& music = playlist[currentMusicIndex];
+		SetMusicVolume(music, muted ? 0.0f : volume);
+		PlayMusicStream(music);
+	}
 }
 
-void Audio::PauseMusic() {
-	PauseMusicStream(bgMusic);
+void Audio::PauseMusic() { 
+	//std::cout << currentMusicIndex << "\nPauseMusic\n";
+	PauseMusicStream(playlist[currentMusicIndex]);
+}
+void Audio::ResumeMusic() { 
+	ResumeMusicStream(playlist[currentMusicIndex]);
 }
 
-void Audio::ResumeMusic() {
-	ResumeMusicStream(bgMusic);
+void Audio::SetAllSFXVolume() {
+	SetSoundVolume(dieSFX, volume);
+	SetSoundVolume(eatSFX, volume);
 }
 
 void Audio::IncreaseVolume() {
-	volume + .05f >= 1.0f ? volume = 1.0f : volume += .05f;
-	SetMusicVolume(bgMusic, muted ? 0.0f : volume);
-	SetSoundVolume(eatSFX, volume);
-	SetSoundVolume(dieSFX, volume);
+	if (volume < 1.0f) {
+		volume += 0.05f;
+		if (volume > 1.0f) volume = 1.0f;
+		SetAllSFXVolume();
+	}
 
+	if (!muted) {
+		SetMusicVolume(playlist[currentMusicIndex], volume);
+	}
+	
 }
 
 void Audio::DecreaseVolume() {
-	volume - .05f <= 0.0f ? volume = 0.0f : volume -= .05f;
-	SetMusicVolume(bgMusic, muted ? 0.0f : volume);
-	SetSoundVolume(eatSFX, volume);
-	SetSoundVolume(dieSFX, volume);
+	if (volume > 0.0f) {
+		volume -= 0.05f;
+		if (volume < 0.0f) volume = 0.0f;
+		SetAllSFXVolume();
+	}
 
+	if (!muted) {
+		SetMusicVolume(playlist[currentMusicIndex], volume);
+	}
 }
 
 void Audio::ToggleMute() {
 	muted = !muted;
-	SetMusicVolume(bgMusic, muted ? 0.0f : volume);
+
+	if (muted) {
+		PauseMusic();  
+	}
+	else {
+		//std::cout << "Resume\n";
+		ResumeMusic(); 
+	}
+}
+
+void Audio::PlayNextMusic() {
+	currentMusicIndex = (currentMusicIndex + 1) % playlist.size();
+	PlayMusic();
 }
 
 float Audio::GetVolume() const {
@@ -70,9 +123,5 @@ float Audio::GetVolume() const {
 }
 
 bool Audio::IsPlaying() const {
-	return IsMusicStreamPlaying(bgMusic);
-}
-
-bool Audio::IsMuted() const {
-	return muted;
+	return IsMusicStreamPlaying(playlist[currentMusicIndex]);
 }

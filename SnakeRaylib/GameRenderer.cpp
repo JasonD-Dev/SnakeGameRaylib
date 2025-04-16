@@ -1,7 +1,7 @@
 #include "GameRenderer.h"
 
 void GameRenderer::RunGame() { // Game Loop
-	InitWindow(Game.map.windowWidth, Game.map.windowHeight, "Snake Game Raylib by Jason D'Souza");
+	InitWindow(Game.map.windowWidth, Game.map.windowHeight + Game.map.cellSize, "Snake Game Raylib by Jason D'Souza");
 	if (!SetIcon())
 	{
 		CloseWindow();
@@ -10,7 +10,10 @@ void GameRenderer::RunGame() { // Game Loop
 
 	while (!WindowShouldClose())
 	{
-		Game.audioManager.Update();
+		if (!Game.GetGameOver()) {
+			Game.audioManager.Update();
+		}
+
 		Game.InputManager(Game.snake);
 		BeginDrawing();
 		ClearBackground(Game.GetNightMode() ? DARKBROWN : RAYWHITE);
@@ -108,6 +111,7 @@ void GameRenderer::DrawGame(Map& map, Snake& snake, GameState& Game)
 	}
 	else if (!Game.GetGameOver() && Game.GetReadyToPlay())
 	{
+
 		DrawGrid(map);
 		DrawRect(static_cast<int>(Game.GetFood().x), static_cast<int>(Game.GetFood().y), Game.GetNightMode() ? RED : RED);
 
@@ -115,10 +119,17 @@ void GameRenderer::DrawGame(Map& map, Snake& snake, GameState& Game)
 		Game.DelayUpdateSnake(snake);
 		DrawSnake(snake, map);
 
-		// Score
-		DrawText(TextFormat("Score: %d", Game.GetScore()), Game.map.gridWidth, 0, 30, Game.GetNightMode() ? RAYWHITE : DARKBLUE);
+		// Interval Rate
+		DrawText(TextFormat("Interval: %.1f%", Game.GetInterval()), 20, map.windowHeight + 10, 40, Game.GetNightMode() ? RAYWHITE : DARKBLUE);
+		
 		// Volume
-		DrawText(TextFormat("Volume: %.0f", Game.audioManager.GetVolume()), Game.map.gridWidth, Game.map.windowHeight - 30, 30, Game.GetNightMode() ? RAYWHITE : DARKBLUE);
+		const char* msg = TextFormat("Volume: %.0f", Game.audioManager.GetVolume());
+		int CenteredX = (map.windowWidth - MeasureText(msg, 40)) / 2;
+		DrawText(msg, CenteredX, map.windowHeight + 10, 40, Game.GetNightMode() ? RAYWHITE : DARKBLUE);
+		
+		//Score
+		DrawText(TextFormat("Score: %d", Game.GetScore()),  map.windowWidth - 250, map.windowHeight + 10, 40, Game.GetNightMode() ? RAYWHITE : DARKBLUE);
+
 	}
 	else
 	{
