@@ -61,8 +61,4 @@ Includes pixel graphics, sound effects, dynamic difficulty, and a full music pla
 Music by <a href="https://pixabay.com/users/djartmusic-46653586/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=301292">Krzysztof Szymanski</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=301292">Pixabay</a>.
 
   > [!NOTE]
-> Both Background and Sound effects are taken from the single track above for v0.
-
-Music by <a href="https://pixabay.com/users/djartmusic-46653586/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=301284">Krzysztof Szymanski</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=301284">Pixabay</a>
-  > [!TIP]
-> Only Background music for slower version.
+> All Music and Sound effects are taken from the above composer.
